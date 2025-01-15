@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors</title>
+    <link rel="stylesheet" href="doctors.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>iHealth</h1>
+            <button class="toggle-sidebar">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="appointment.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Appointments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="doctors.html" class="nav-link active">
+                    <i class="fas fa-user-md"></i>
+                    <span>Doctors</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="doctor-selection">
+        <div class="doctor-card" onclick="showDoctorDetails('Dr. Sarah Johnson', 'General Medicine', 'Dr. Sarah Johnson specializes in diagnosing and treating a wide range of general medical conditions. She has over 10 years of experience in primary healthcare.')">
+            <div class="doctor-avatar">
+                <img src="../img/doc2.jpg" alt="Dr. Sarah Johnson">
+            </div>
+            <h5>Dr. Sarah Johnson</h5>
+            <p class="mb-0">General Medicine</p>
+        </div>
+        <div class="doctor-card" onclick="showDoctorDetails('Dr. Michael Chen', 'Pediatrician', 'Dr. Michael Chen is a highly skilled pediatrician dedicated to the health and wellbeing of children.')">
+            <div class="doctor-avatar">
+                <img src="../img/doc1.jpg" alt="Dr. Michael Chen">
+            </div>
+            <h5>Dr. Michael Chen</h5>
+            <p class="mb-0">Pediatrician</p>
+        </div>
+        <div class="doctor-card" onclick="showDoctorDetails('Dr. Emily Martinez', 'Dermatologist', 'Dr. Emily Martinez provides expert care in treating various skin conditions, including acne, eczema, and skin cancer.')">
+            <div class="doctor-avatar">
+                <img src="../img/doc3.jpg" alt="Dr. Emily Martinez">
+            </div>
+            <h5>Dr. Emily Martinez</h5>
+            <p class="mb-0">Dermatologist</p>
+        </div>
+        <div class="doctor-card" onclick="showDoctorDetails('Dr. Louie Briton', 'Neurologist', 'Dr. Louie Briton has extensive experience in diagnosing and treating neurological disorders such as migraines and epilepsy.')">
+            <div class="doctor-avatar">
+                <img src="../img/doc4.jpg" alt="Dr. Louie Briton">
+            </div>
+            <h5>Dr. Louie Briton</h5>
+            <p class="mb-0">Neurologist</p>
+        </div>
+        <div class="doctor-card" onclick="showDoctorDetails('Dr. Cherry Paris', 'Ophthalmologist', 'Dr. Cherry Paris is an expert in eye care and surgeries, helping patients improve and maintain their vision.')">
+            <div class="doctor-avatar">
+                <img src="../img/doc5.jpg" alt="Dr. Cherry Paris">
+            </div>
+            <h5>Dr. Cherry Paris</h5>
+            <p class="mb-0">Ophthalmologist</p>
+        </div>
+        <div class="doctor-card" onclick="showDoctorDetails('Dr. Mark Enver', 'Urologist', 'Dr. Mark Enver specializes in urinary tract and male reproductive system health, offering cutting-edge treatments.')">
+            <div class="doctor-avatar">
+                <img src="../img/doc6.jpg" alt="Dr. Mark Enver">
+            </div>
+            <h5>Dr. Mark Enver</h5>
+            <p class="mb-0">Urologist</p>
+        </div>
+    </div>
+    
+    <!-- Doctor Details Modal -->
+    <div id="doctorModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="doctorName"></h2>
+            <h4 id="doctorSpecialty"></h4>
+            <p id="doctorDescription"></p>
+        </div>
+    </div>
+
+    <script>
+        function showDoctorDetails(name, specialty, description) {
+    const modal = document.getElementById('doctorModal');
+    document.getElementById('doctorName').textContent = name;
+    document.getElementById('doctorSpecialty').textContent = specialty;
+    document.getElementById('doctorDescription').textContent = description;
+    modal.style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('doctorModal').style.display = 'none';
+}
+
+// Close the modal when clicking outside it
+window.onclick = function (event) {
+    const modal = document.getElementById('doctorModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+};
+
+// Sidebar Toggle Logic
+const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const toggleButton = document.querySelector('.toggle-sidebar');
+    
+        toggleButton.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

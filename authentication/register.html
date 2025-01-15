@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <title>Register</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-header h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #343a40;
+        }
+        .form-footer {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .form-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .input-group-text {
+            background-color: #f8f9fa;
+            border-right: 0;
+        }
+        .form-control {
+            border-left: 0;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.875rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-header">
+        <h2>Sign Up</h2>
+    </div>
+    <form id="registerForm">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-control" placeholder="Enter your Email" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                <button type="button" class="btn btn-outline-secondary eye-icon" onclick="togglePasswordVisibility('password', 'eye-icon-password')">
+                    <i class="fas fa-eye" id="eye-icon-password"></i>
+                </button>
+            </div>
+            <div class="error-message" id="password-error"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter your password" required>
+                <button type="button" class="btn btn-outline-secondary eye-icon" onclick="toggleconfirmPasswordVisibility()">
+                    <i class="fas fa-eye" id="eye-icon-confirmPassword"></i>
+            </button>
+            </div>
+            <div class="error-message" id="confirm-password-error"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Register</button>
+    </form>
+    <div class="form-footer">
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+</div>
+
+<script type="module">
+    // Firebase Imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAnZu08uSA2EXwkUyd_1hF2Lqxk4uxQ_9s",
+            authDomain: "newhealth-b3603.firebaseapp.com",
+            databaseURL: "https://newhealth-b3603-default-rtdb.firebaseio.com",
+            projectId: "newhealth-b3603",
+            storageBucket: "newhealth-b3603.appspot.com",
+            messagingSenderId: "978834053140",
+            appId: "1:978834053140:web:c6f2fdf2c4f977a7cbaf01"
+        };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const registerForm = document.getElementById('registerForm');
+    const passwordError = document.getElementById('password-error');
+    const confirmPasswordError = document.getElementById('confirm-password-error');
+
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (password !== confirmPassword) {
+            confirmPasswordError.textContent = 'Passwords do not match!';
+            confirmPasswordError.style.display = 'block';
+            return;
+        } else {
+            confirmPasswordError.style.display = 'none';
+        }
+
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            alert('Registration successful!');
+            window.location.href = 'login.html';
+        } catch (error) {
+            passwordError.textContent = error.message.replace('Firebase: ', '');
+            passwordError.style.display = 'block';
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-MCzAd1o6DM3Z+qx5OTSNlqL3Yx81+yZhA5YYZtZ9vYUEzMy+utTteGrFQj8Hmlto" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="script.js"></script>
+</body>
+</html>

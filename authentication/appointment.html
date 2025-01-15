@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Appointment</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="appointment.css">
+        <link rel="icon" href="../img/logo.png" type="image/x-icon" />
+        <style>
+            .doctor-card.selected {
+                border: 2px solid #2563eb;
+                background-color: #f0f7ff;
+                transform: translateY(-2px);
+            }
+            .doctor-avatar img {
+                width: 100px; /* Adjust the width as needed */
+                height: 100px; /* Adjust the height as needed */
+                border-radius: 50%; /* Makes the image circular */
+                border: 2px solid #ccc; /* Adds a border around the image */
+                object-fit: cover; /* Ensures the image covers the container */
+            }
+        </style>
+        <script src="https://www.paypal.com/sdk/js?client-id=Ac563jPtGETZY9EJ4kTSjAP_v8UiXAPJzz28Jld3NjV4cdUl7llJyQ9Yxt22cWIqDtFjLYBqzJm8OfX5&currency=USD"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+        <script type="text/javascript">
+            (function() {
+                emailjs.init("gFGc5iPfeA-gcE_Ct");
+            })();
+        </script>
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>iHealth</h1>
+                <button class="toggle-sidebar">
+                    <i class="fa-solid fa-sliders"></i>
+                </button>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="appointment.html" class="nav-link active">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="doctors.html" class="nav-link">
+                        <i class="fas fa-user-md"></i>
+                        <span>Doctors</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="appointment-section">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user-circle me-2"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="./profile.html"><i class="fas fa-user me-2"></i>Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger logout-btn" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+                <h2>Book an Appointment</h2>
+                <div class="doctor-selection">
+                    <div class="doctor-card" onclick="selectDoctor(this, 'Dr. Sarah Johnson')">
+                        <div class="doctor-avatar">
+                            <img src="../img/d0c1.jpg" alt="Dr. Sarah Johnson">
+                        </div>
+                        <h5>Dr. Sarah Johnson</h5>
+                        <p class="mb-0">General Medicine</p>
+                    </div>
+                    <div class="doctor-card" onclick="selectDoctor(this, 'Dr. Michael Chen')">
+                        <div class="doctor-avatar">
+                            <img src="../img/doc1.jpg" alt="Dr. Michael Chen">
+                        </div>
+                        <h5>Dr. Michael Chen</h5>
+                        <p class="mb-0">Pediatrician</p>
+                    </div>
+                    <div class="doctor-card" onclick="selectDoctor(this, 'Dr. Emily Martinez')">
+                        <div class="doctor-avatar">
+                            <img src="../img/doc3.jpg" alt="Dr. Emily Martinez">
+                        </div>
+                        <h5>Dr. Emily Martinez</h5>
+                        <p class="mb-0">Dermatologist</p>
+                    </div>
+                    <div class="doctor-card" onclick="selectDoctor(this, 'Dr. Louie Briton')">
+                        <div class="doctor-avatar">
+                            <img src="../img/doc4.jpg" alt="Dr. Louie Briton">
+                        </div>
+                        <h5>Dr. Louie Briton</h5>
+                        <p class="mb-0">Neurologist</p>
+                    </div>
+                    <div class="doctor-card" onclick="selectDoctor(this, 'Dr. Cherry Paris')">
+                        <div class="doctor-avatar">
+                            <img src="../img/doc5.jpg" alt="Dr. Cherry Paris">
+                        </div>
+                        <h5>Dr. Cherry Paris</h5>
+                        <p class="mb-0">Opthalmologist</p>
+                    </div>
+                    <div class="doctor-card" onclick="selectDoctor(this, 'Dr. Mark Enver')">
+                        <div class="doctor-avatar">
+                            <img src="../img/doc6.jpg" alt="Dr. Mark Enver">
+                        </div>
+                        <h5>Dr. Mark Enver</h5>
+                        <p class="mb-0">Urologist</p>
+                    </div>
+                </div>
+                
+                <div class="text-end mb-4">
+                    <button type="button" class="btn btn-outline-primary" onclick="viewAppointments()">
+                        <i class="fas fa-calendar me-2"></i>View My Appointments
+                    </button>
+                </div>
+
+                <form id="appointment-form" class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                            <div class="invalid-feedback">
+                                Please provide your full name.
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" required readonly>
+                            <div class="invalid-feedback">
+                                Please provide a valid email.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="date">Appointment Date</label>
+                            <input type="date" class="form-control" id="date" required readonly>
+                            <div class="invalid-feedback">
+                                Please select an available date.
+                            </div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="time">Appointment Time (8 AM - 5 PM)</label>
+                            <input type="time" class="form-control" id="time" required readonly>
+                            <div class="invalid-feedback">
+                                Please select an available time slot.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason">Reason for Visit</label>
+                        <textarea class="form-control" id="reason" rows="3" required></textarea>
+                        <div class="invalid-feedback">
+                            Please provide a reason for your visit.
+                        </div>
+                    </div>
+
+                    <div class="appointment-summary" id="appointment-summary" style="display: none;">
+                        <h5>Appointment Summary</h5>
+                        <div id="summary-content"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-calendar-check me-2"></i>
+                        Book Appointment
+                    </button>
+                </form>
+            </div>
+        </div>
+
+       <!-- View Appointments Modal -->
+<div class="modal fade" id="appointmentsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">My Appointments</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+    <tr>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Reason</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+</thead>
+                        <tbody id="appointmentsTableBody">
+    <!-- Example Row -->
+    <tr>
+        <td>Dr. Smith</td>
+        <td>2025-01-15</td>
+        <td>10:00 AM</td>
+        <td>Regular Checkup</td>
+        <td>Confirmed</td>
+        <td>
+            <button type="button" data-appointment-id="1" data-amount="100" onclick="handlePayment(this)">Pay</button>
+        </td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+function initPayPalButton(appointmentId, amount) {
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        currency_code: "USD",
+                        value: amount
+                    },
+                    description: `Appointment ID: ${appointmentId}`
+                }]
+            });
+        },
+        onApprove: async function(data, actions) {
+            // Capture the payment
+            const order = await actions.order.capture();
+            
+            try {
+                // Update appointment status in Firebase
+                const appointmentRef = doc(db, 'appointments', appointmentId);
+                await updateDoc(appointmentRef, {
+                    paymentStatus: 'Paid',
+                    paymentId: order.id,
+                    paymentDate: new Date()
+                });
+
+                alert('Payment successful!');
+                // Refresh appointments view
+                viewAppointments();
+            } catch (error) {
+                console.error('Error updating payment status:', error);
+                alert('Payment recorded but status update failed');
+            }
+        },
+        onError: function(err) {
+            console.error('Payment error:', err);
+            alert('Payment failed. Please try again.');
+        }
+    }).render(`#paypal-button-${appointmentId}`);
+}
+</script>
+
+<script>
+    async function handlePayment(button) {
+        try {
+            const appointmentId = button.dataset.appointmentId;
+            const amount = button.dataset.amount;
+
+            // Call your backend to create a PayPal payment
+            const response = await fetch('/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    appointmentId: appointmentId,
+                    amount: amount
+                })
+            });
+
+            if (response.ok) {
+                const approvalUrl = await response.text();
+                window.location.href = approvalUrl; // Redirect to PayPal approval URL
+            } else {
+                alert('Error creating PayPal payment');
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            alert('Payment failed: ' + error.message);
+        }
+    }
+</script>
+
+<script>
+function payFunction(button) {
+    const appointmentId = button.getAttribute('data-appointment-id');
+    const amount = button.getAttribute('data-amount');
+    
+    // Add your payment logic here
+    alert(`Payment process initiated for appointment ID: ${appointmentId}, Amount: $${amount}`);
+}
+</script>
+
+<script>
+async function updatePaymentStatus(appointmentId) {
+    try {
+        const appointmentRef = doc(db, 'appointments', appointmentId);
+        await updateDoc(appointmentRef, {
+            paymentStatus: 'Paid'
+        });
+        // Refresh the appointments view
+        await viewAppointments();
+    } catch (error) {
+        console.error("Error updating payment status: ", error);
+    }
+}
+</script>
+
+        <script>
+            // Global functions that need to be accessible from HTML
+            window.selectDoctor = function(card, doctorName) {
+                document.querySelectorAll('.doctor-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                window.selectedDoctor = doctorName;
+                updateSummary();
+            }
+
+            function updateSummary() {
+                const name = document.getElementById('name').value;
+                const date = document.getElementById('date').value;
+                const time = document.getElementById('time').value;
+                const reason = document.getElementById('reason').value;
+
+                if (window.selectedDoctor && name && date && time && reason) {
+                    document.getElementById('appointment-summary').style.display = 'block';
+                    document.getElementById('summary-content').innerHTML = `
+                        <p><strong>Doctor:</strong> ${window.selectedDoctor}</p>
+                        <p><strong>Patient:</strong> ${name}</p>
+                        <p><strong>Date:</strong> ${new Date(date).toLocaleDateString()}</p>
+                        <p><strong>Time:</strong> ${time}</p>
+                        <p><strong>Reason:</strong> ${reason}</p>
+                    `;
+                }
+            }
+        </script>
+
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+        import { query, where, getDocs, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAnZu08uSA2EXwkUyd_1hF2Lqxk4uxQ_9s",
+            authDomain: "newhealth-b3603.firebaseapp.com",
+            databaseURL: "https://newhealth-b3603-default-rtdb.firebaseio.com",
+            projectId: "newhealth-b3603",
+            storageBucket: "newhealth-b3603.firebasestorage.app",
+            messagingSenderId: "978834053140",
+            appId: "1:978834053140:web:c6f2fdf2c4f977a7cbaf01",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        window.selectedDoctor = ''; // Make it global
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) currentUser = user;
+            else window.location.href = "login.html";
+        });
+
+        // Date and Time Logic
+        function getAvailableDates() {
+            const dates = [];
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            for (let i = 0; i < 30; i += 3) { // Next 30 days, every 3 days
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                if (date >= today) { // Only future dates
+                    dates.push(date.toISOString().split('T')[0]);
+                }
+            }
+            return dates;
+        }
+
+        function getAvailableTimeSlots() {
+            const slots = [];
+            for (let hour = 8; hour <= 17; hour++) { // 8 AM to 5 PM
+                slots.push(`${hour.toString().padStart(2, '0')}:00`);
+            }
+            return slots;
+        }
+
+        // Initialize date and time inputs
+        function initializeDateTimeInputs() {
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+
+            // Get next available date (2 days from now)
+            const today = new Date();
+            const nextAvailable = new Date(today);
+            nextAvailable.setDate(today.getDate() + 2);
+            dateInput.value = nextAvailable.toISOString().split('T')[0];
+            dateInput.readOnly = true;
+
+            // Get next available time slot
+            const currentHour = today.getHours();
+            let nextSlot = 8; // Start at 8 AM
+
+            if (currentHour >= 8 && currentHour < 17) {
+                nextSlot = currentHour + 1;
+            }
+
+            // Format time for input
+            const timeValue = `${nextSlot.toString().padStart(2, '0')}:00`;
+            timeInput.value = timeValue;
+            timeInput.readOnly = true;
+
+            // Add event listeners for form submission to handle next available slot
+            const form = document.getElementById('appointment-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (await checkSlotAvailability(dateInput.value, timeInput.value)) {
+                    // Submit form logic here
+                } else {
+                    // Get next available slot
+                    getNextAvailableSlot(dateInput.value, timeInput.value);
+                }
+            });
+        }
+
+        async function checkSlotAvailability(date, time) {
+            const appointmentsRef = collection(db, 'appointments');
+            const q = query(
+                appointmentsRef,
+                where('appointmentDate', '==', new Date(`${date}T${time}`))
+            );
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.empty;
+        }
+
+        // Add this function to check the number of bookings for a specific date
+        async function getBookingsCountForDate(date) {
+            const startOfDay = new Date(date);
+            startOfDay.setHours(0, 0, 0, 0);
+            
+            const endOfDay = new Date(date);
+            endOfDay.setHours(23, 59, 59, 999);
+            
+            const appointmentsRef = collection(db, 'appointments');
+            const q = query(
+                appointmentsRef,
+                where('appointmentDate', '>=', startOfDay),
+                where('appointmentDate', '<=', endOfDay)
+            );
+            
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.size;
+        }
+
+        // Modify the getNextAvailableSlot function to handle daily booking limits
+        async function getNextAvailableSlot(currentDate, currentTime) {
+            const MAX_BOOKINGS_PER_DAY = 5; // Set maximum bookings per day
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+            
+            let nextDate = new Date(currentDate);
+            let nextHour = parseInt(currentTime.split(':')[0]);
+            
+            while (true) {
+                // Check bookings count for the current date
+                const bookingsCount = await getBookingsCountForDate(nextDate);
+                
+                if (bookingsCount >= MAX_BOOKINGS_PER_DAY) {
+                    // Move to next day if booking limit reached
+                    nextDate.setDate(nextDate.getDate() + 1);
+                    nextHour = 8; // Reset to 8 AM for the new day
+                } else {
+                    // Check availability for current time slot
+                    const nextTimeSlot = `${nextHour.toString().padStart(2, '0')}:00`;
+                    const isSlotAvailable = await checkSlotAvailability(
+                        nextDate.toISOString().split('T')[0], 
+                        nextTimeSlot
+                    );
+                    
+                    if (isSlotAvailable) {
+                        dateInput.value = nextDate.toISOString().split('T')[0];
+                        timeInput.value = nextTimeSlot;
+                        return;
+                    }
+                    
+                    // Try next hour
+                    nextHour++;
+                    
+                    // Move to next day if past 5 PM
+                    if (nextHour >= 17) {
+                        nextDate.setDate(nextDate.getDate() + 1);
+                        nextHour = 8;
+                    }
+                }
+            }
+        }
+
+        // Auto-populate email from logged in user
+        document.addEventListener('DOMContentLoaded', () => {
+            const emailInput = document.getElementById('email');
+            emailInput.readOnly = true;
+            
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    emailInput.value = user.email;
+                }
+            });
+
+            // Initialize date and time with auto-increment logic
+            initializeDateTimeInputs();
+        });
+
+        // Update form event listener
+        const form = document.getElementById('appointment-form');
+        form.addEventListener('input', updateSummary);
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            if (!window.selectedDoctor) {
+                alert('Please select a doctor');
+                return;
+            }
+
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+
+            try {
+                // Check current date's booking count
+                const bookingsCount = await getBookingsCountForDate(new Date(dateInput.value));
+                
+                if (bookingsCount >= 5) {
+                    alert('Maximum bookings reached for this day. Finding next available slot...');
+                    await getNextAvailableSlot(dateInput.value, timeInput.value);
+                    
+                    // Show updated date/time to user
+                    const confirmBooking = confirm(
+                        `Next available slot is on ${dateInput.value} at ${timeInput.value}. Would you like to book this slot?`
+                    );
+                    
+                    if (!confirmBooking) {
+                        return;
+                    }
+                }
+
+                // Continue with booking process...
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    form.classList.add('was-validated');
+                    return;
+                }
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const reason = document.getElementById('reason').value;
+
+                await addDoc(collection(db, 'appointments'), {
+                    userId: currentUser.uid,
+                    userName: name,
+                    userEmail: email,
+                    appointmentDate: new Date(`${dateInput.value}T${timeInput.value}:00`),
+                    reason,
+                    doctor: window.selectedDoctor,
+                    status: 'Pending',
+                    createdAt: new Date()
+                });
+
+                alert("Appointment booked successfully!");
+                form.reset();
+                document.getElementById('appointment-summary').style.display = 'none';
+                document.querySelectorAll('.doctor-card').forEach(c => c.classList.remove('selected'));
+                window.selectedDoctor = '';
+                
+            } catch (error) {
+                console.error("Error booking appointment:", error);
+                alert("Failed to book appointment: " + error.message);
+            }
+        });
+
+        document.querySelector('.toggle-sidebar').addEventListener('click', () => {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+            document.querySelector('.main-content').classList.toggle('expanded');
+        });
+
+        // Fetch and display appointments in the modal
+        window.viewAppointments = async function () {
+            if (!currentUser) return;
+
+            try {
+                const appointmentsRef = collection(db, 'appointments');
+                const q = query(
+                    appointmentsRef,
+                    where('userId', '==', currentUser.uid)
+                );
+
+                const querySnapshot = await getDocs(q);
+
+                // Convert to array and sort client-side
+                const appointments = [];
+                querySnapshot.forEach((doc) => {
+                    appointments.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                // Sort by date descending
+                appointments.sort((a, b) => b.appointmentDate.seconds - a.appointmentDate.seconds);
+
+                const appointmentsTableBody = document.getElementById('appointmentsTableBody');
+                appointmentsTableBody.innerHTML = '';
+
+                appointments.forEach((data) => {
+                    const date = new Date(data.appointmentDate.seconds * 1000);
+                    const row = document.createElement('tr');
+                    
+                    const paymentStatus = data.paymentStatus || 'Pending';
+                    const statusClass = paymentStatus === 'Paid' ? 'bg-success' : 'bg-warning';
+                    
+                    row.innerHTML = `
+                        <td>${data.doctor}</td>
+                        <td>${date.toLocaleDateString()}</td>
+                        <td>${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                        <td>${data.reason}</td>
+                        <td><span class="badge ${statusClass}">${paymentStatus}</span></td>
+                        <td>
+                            ${paymentStatus !== 'Paid' ? 
+                                `<div id="paypal-button-${data.id}"></div>` : 
+                                `<span class="text-success"><i class="fas fa-check-circle"></i> Paid</span>`
+                            }
+                        </td>
+                    `;
+                    
+                    appointmentsTableBody.appendChild(row);
+
+                    if (paymentStatus !== 'Paid') {
+                        initPayPalButton(data.id, 100, data); // Pass appointment details
+                    }
+                });
+
+                // Show the modal
+                const modal = new bootstrap.Modal(document.getElementById('appointmentsModal'));
+                modal.show();
+            } catch (error) {
+                console.error("Error fetching appointments:", error);
+                alert("Error fetching appointments: " + error.message);
+            }
+        }
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    </body>
+    </html>

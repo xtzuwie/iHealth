@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile | iHealth</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Styles are grouped for better readability */
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-700: #374151;
+      --white: #fff;
+      --shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      min-height: 100vh;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 1rem;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--gray-200);
+      padding-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--gray-700);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-control:disabled {
+      background-color: var(--gray-100);
+      cursor: not-allowed;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: var(--white);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      background: var(--white);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+
+    .alert {
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .alert-success {
+      background-color: #dcfce7;
+      color: var(--success);
+      border: 1px solid #86efac;
+    }
+
+    .alert-error {
+      background-color: #fee2e2;
+      color: var(--danger);
+      border: 1px solid #fca5a5;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255,255,255,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--gray-200);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+  </style>
+</head>
+<body>
+
+<div id="loadingOverlay" class="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container">
+  <div class="card">
+    <div class="header">
+      <button class="btn btn-outline" onclick="goBack()">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      <h1>Edit Profile</h1>
+      <button id="saveBtn" class="btn btn-primary" onclick="saveData()">
+        <i class="fas fa-save"></i> Save
+      </button>
+    </div>
+
+    <div id="alertSuccess" class="alert alert-success">
+      <i class="fas fa-check-circle"></i> Profile updated successfully!
+    </div>
+
+    <div id="alertError" class="alert alert-error"></div>
+
+    <form id="profileForm">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" disabled>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" id="userName" class="form-control" placeholder="Enter your username">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">First Name</label>
+        <input type="text" id="firstName" class="form-control" placeholder="Enter your first name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Last Name</label>
+        <input type="text" id="lastName" class="form-control" placeholder="Enter your last name">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Birthday</label>
+        <input type="date" id="birthday" class="form-control" placeholder="Enter your birthday">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Gender</label>
+        <input type="text" id="gender" class="form-control" placeholder="Enter your gender">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Contact</label>
+        <input type="text" id="contact" class="form-control" placeholder="Enter your contact">
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="editBtn" class="btn btn-primary" onclick="editData()">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button type="button" id="discardBtn" class="btn btn-outline" onclick="discardChanges()" style="display: none">
+          <i class="fas fa-undo"></i> Discard
+        </button>
+        <button type="button" id="deleteBtn" class="btn btn-danger" onclick="confirmDelete()">
+          <i class="fas fa-trash"></i> Delete Account
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, deleteUser } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import { getDatabase, ref, get, set, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAnZu08uSA2EXwkUyd_1hF2Lqxk4uxQ_9s",
+      authDomain: "newhealth-b3603.firebaseapp.com",
+      databaseURL: "https://newhealth-b3603-default-rtdb.firebaseio.com",
+      projectId: "newhealth-b3603",
+      storageBucket: "newhealth-b3603.appspot.com",
+      messagingSenderId: "978834053140",
+      appId: "1:978834053140:web:c6f2fdf2c4f977a7cbaf01"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let userData = null;
+    let originalData = null;
+    let isEditing = false;
+
+    // DOM elements
+    const formElements = {
+        userName: document.getElementById("userName"),
+        firstName: document.getElementById("firstName"),
+        lastName: document.getElementById("lastName"),
+        birthday: document.getElementById("birthday"),
+        gender: document.getElementById("gender"),
+        contact: document.getElementById("contact"),
+        email: document.getElementById("email")
+    };
+
+    const buttons = {
+        edit: document.getElementById("editBtn"),
+        save: document.getElementById("saveBtn"),
+        discard: document.getElementById("discardBtn"),
+        delete: document.getElementById("deleteBtn")
+    };
+
+    const alerts = {
+        success: document.getElementById("alertSuccess"),
+        error: document.getElementById("alertError"),
+        loading: document.getElementById("loadingOverlay")
+    };
+
+    // Initialize form state
+    const initializeForm = () => {
+        Object.values(formElements).forEach(input => {
+            if (input.id !== 'email') {
+                input.disabled = true;
+            }
+        });
+        buttons.save.disabled = true;
+        buttons.discard.style.display = 'none';
+    };
+
+    // Enable form editing
+    const enableFormEditing = () => {
+        isEditing = true;
+        Object.values(formElements).forEach(input => {
+            if (input.id !== 'email') {
+                input.disabled = false;
+            }
+        });
+        buttons.edit.style.display = 'none';
+        buttons.save.disabled = false;
+        buttons.discard.style.display = 'inline-block';
+    };
+
+    // Disable form editing
+    const disableFormEditing = () => {
+        isEditing = false;
+        Object.values(formElements).forEach(input => {
+            if (input.id !== 'email') {
+                input.disabled = true;
+            }
+        });
+        buttons.edit.style.display = 'inline-block';
+        buttons.save.disabled = true;
+        buttons.discard.style.display = 'none';
+    };
+
+    // Populate form with data
+    const populateForm = (data) => {
+        Object.entries(formElements).forEach(([key, input]) => {
+            input.value = data[key] || '';
+        });
+    };
+
+    // Handle form data save
+    const saveData = async () => {
+        if (!auth.currentUser) return;
+
+        const updatedData = {};
+        Object.entries(formElements).forEach(([key, input]) => {
+            if (key !== 'email') {
+                updatedData[key] = input.value.trim();
+            }
+        });
+
+        try {
+            alerts.loading.style.display = 'flex';
+            const userRef = ref(db, `users/${auth.currentUser.uid}`);
+            await set(userRef, updatedData);
+            
+            userData = updatedData;
+            originalData = { ...updatedData };
+            
+            alerts.success.style.display = 'block';
+            setTimeout(() => alerts.success.style.display = 'none', 3000);
+            
+            disableFormEditing();
+        } catch (error) {
+            alerts.error.textContent = `Error saving data: ${error.message}`;
+            alerts.error.style.display = 'block';
+        } finally {
+            alerts.loading.style.display = 'none';
+        }
+    };
+
+    // Initialize on page load
+    window.onload = () => {
+        initializeForm();
+        
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            formElements.email.value = user.email;
+            const userRef = ref(db, `users/${user.uid}`);
+
+            try {
+                alerts.loading.style.display = "flex";
+                const snapshot = await get(userRef);
+
+                if (snapshot.exists()) {
+                    userData = snapshot.val();
+                    originalData = { ...userData };
+                    populateForm(userData);
+                }
+            } catch (error) {
+                alerts.error.textContent = `Error fetching data: ${error.message}`;
+                alerts.error.style.display = 'block';
+            } finally {
+                alerts.loading.style.display = "none";
+            }
+        });
+    };
+
+    // Event handlers
+    window.editData = enableFormEditing;
+    window.saveData = saveData;
+    window.discardChanges = () => {
+        populateForm(originalData);
+        disableFormEditing();
+    };
+    window.confirmDelete = async () => {
+        if (!confirm("Are you sure you want to delete your account?")) return;
+        
+        try {
+            alerts.loading.style.display = 'flex';
+            const userRef = ref(db, `users/${auth.currentUser.uid}`);
+            await remove(userRef);
+            await deleteUser(auth.currentUser);
+            window.location.href = "login.html";
+        } catch (error) {
+            alerts.error.textContent = `Error deleting account: ${error.message}`;
+            alerts.error.style.display = 'block';
+        } finally {
+            alerts.loading.style.display = 'none';
+        }
+    };
+    window.goBack = () => window.history.back();
+</script>
+
+  </body>
+  </html>

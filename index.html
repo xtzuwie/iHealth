@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iHealth</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="img/logo.png" type="image/x-icon" />
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header with sticky navigation -->
+  <header class="fixed w-full bg-white shadow-lg z-50 transition-all duration-300">
+    <div class="container mx-auto flex items-center justify-between py-4 px-6">
+      <!-- Logo with hover effect -->
+      <div class="flex items-center transition-transform hover:scale-105">
+        <div>
+          <a href="index.html"></a>
+          <span class="block text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+            iHealth
+          </span>
+          <span class="block text-sm font-medium text-white-600">
+            Live your life to the fullest
+          </span>
+        </div>
+      </div>
+
+      <!-- Desktop Navigation with underline effect -->
+      <nav class="hidden md:flex space-x-8">
+        <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium relative after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-blue-600 after:bottom-[-4px] after:left-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Home</a>
+        <a href="#about" class="text-gray-700 hover:text-blue-600 font-medium relative after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-blue-600 after:bottom-[-4px] after:left-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">About Us</a>
+        <a href="#services" class="text-gray-700 hover:text-blue-600 font-medium relative after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-blue-600 after:bottom-[-4px] after:left-0 after:scale-x-0 hover:after:scale-x-100 after:transition-transform">Services</a>
+      </nav>
+
+      <!-- Action Buttons with improved hover effects -->
+      <div class="hidden md:flex space-x-4">
+        <a href="authentication/register.html" class="px-6 py-2.5 bg-blue-600 text-white rounded-full shadow-lg hover:shadow-blue-500/50 hover:bg-blue-700 transition-all duration-300 font-medium">Register</a>
+        <a href="authentication/login.html" class="px-6 py-2.5 border-2 border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300 font-medium">Login</a>
+      </div>
+
+      <!-- Improved Hamburger Menu -->
+      <button class="md:hidden focus:outline-none" onclick="toggleMenu()">
+        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-16 6h16"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Enhanced Mobile Menu with animations -->
+    <div class="mobile-menu hidden md:hidden animate-slide-down" id="mobileMenu">
+      <div class="px-4 py-3 space-y-3 bg-white shadow-lg rounded-b-lg">
+        <a href="index.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors">
+          <i class="fas fa-home mr-2"></i>Home
+        </a>
+        <a href="#about" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors">
+          <i class="fas fa-info-circle mr-2"></i>About Us
+        </a>
+        <a href="#services" class="block px-4 py-2 text-gray-700 hover:bg-blue-50 rounded-lg transition-colors">
+          <i class="fas fa-stethoscope mr-2"></i>Services
+        </a>
+        <hr class="my-2">
+        <a href="authentication/register.html" class="block px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+          <i class="fas fa-user-plus mr-2"></i>Register
+        </a>
+        <a href="authentication/login.html" class="block px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
+          <i class="fas fa-sign-in-alt mr-2"></i>Login
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with gradient and wave -->
+  <section class="gradient-background text-white pt-40 pb-32 relative overflow-hidden">
+    <div class="container mx-auto text-center px-6 relative z-10">
+      <h1 class="text-6xl md:text-7xl font-bold mb-8 animate-fade-in leading-tight">
+        Your Health, Our Priority
+      </h1>
+      <p class="text-xl md:text-2xl text-blue-100 mb-12 animate-fade-in max-w-3xl mx-auto">
+        Experience modern healthcare with our expert doctors and state-of-the-art facilities
+      </p>
+      <div class="flex gap-6 justify-center">
+        <a href="authentication/login.html" class="px-8 py-4 bg-white text-blue-600 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300">
+          Get Started Today
+        </a>
+        <a href="#services" class="px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-blue-600 transition-all duration-300">
+          Explore Services
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="bento-container">
+    <h2 class="bento-title">Our Healthcare Application</h2>
+    
+    <div class="bento-grid">
+      <!-- Featured Large Card -->
+      <div class="bento-item large">
+        <div class="bento-content">
+          <img src="img/bento-img.jpg" alt="">
+          <h3>Sign Up</h3>
+          <p>A simple register page just for you.</p>
+        </div>
+        <div class="bento-overlay">
+          <span>Get Started</span>
+        </div>
+      </div>
+  
+      <!-- Vertical Card -->
+      <div class="bento-item vertical">
+        <div class="bento-content">
+          <video src="img/for-bento-vid.mp4" muted loop class="w-full h-auto rounded-lg shadow-lg"></video>
+          <h3>Onboarding</h3>
+          <p>A short video of onboarding animation of this application.</p>
+        </div>
+        <div class="bento-overlay">
+          <span>Get Started</span>
+        </div>
+      </div>
+  
+      <!-- Square Card 1 -->
+      <div class="bento-item">
+        <div class="bento-content">
+          <img src="img/bento-img2.jpg" alt="">
+          <h3>Sign In</h3>
+          <p>Got a profile? Sign In to use our features.</p>
+        </div>
+        <div class="bento-overlay">
+          <span>Learn More</span>
+        </div>
+      </div>
+  
+      <!-- Square Card 2 -->
+      <div class="bento-item">
+        <div class="bento-content">
+          <img src="img/bento-img3.jpg" alt="">
+          <h3>iHealth User Interface</h3>
+          <p>Simplified User Interface to make the features intuitive.</p>
+        </div>
+        <div class="bento-overlay">
+          <span>Get Started</span>
+        </div>
+      </div>
+  
+      <!-- Wide Card -->
+      <div class="bento-item wide">
+        <div class="bento-content">
+          <img src="img/bento-img4.jpg" alt="">
+          <h3>Our Services</h3>
+          <p>We have 6 services to choose from.</p>
+        </div>
+        <div class="bento-overlay">
+          <span>Get Started</span>
+        </div>
+      </div>
+      <!-- Vertical Card -->
+      <div class="bento-item vertical1">
+        <div class="bento-content">
+          <img src="img/bento-img5.jpg" alt="">
+          <h3>Profile Page</h3>
+          <p>Finished booking? View your schedule on your profile.</p>
+        </div>
+        <div class="bento-overlay">
+          <span>View Profile</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+     <!-- Features Section -->
+     <section class="py-24 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center mb-16">Why Choose iHealth</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div class="bg-white shadow-xl rounded-2xl p-8 text-center transform hover:-translate-y-2 transition-all duration-300">
+            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <i class="fa-solid fa-stethoscope text-blue-600 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-4">Simplified Booking</h3>
+            <p class="text-gray-600">Book your appointments in minutes with our intuitive interface</p>
+          </div>
+        <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+          <i class="fa-solid fa-heartbeat text-blue-500 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">No time consuming</h3>
+          <p class="mt-2 text-gray-600">Reduce your waiting time like never before.</p>
+        </div>
+        <div class="bg-white shadow-lg rounded-lg p-6 text-center">
+          <i class="fa-solid fa-syringe text-blue-500 text-4xl mb-4"></i>
+          <h3 class="text-xl font-semibold">Minimalistic Profile</h3>
+          <p class="mt-2 text-gray-600">Edit some of your information on the profile page.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- About Us Section -->
+<section id="about" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">About iHealth</h2>
+      <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+          <h3 class="text-2xl font-semibold text-blue-600 mb-4">Our Mission</h3>
+          <p class="text-gray-600 leading-relaxed">
+            At iHealth, we're committed to revolutionizing healthcare accessibility. Our state-of-the-art appointment system 
+            seamlessly connects you with expert healthcare professionals, ensuring you receive timely, quality care tailored 
+            to your needs.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+          <h3 class="text-2xl font-semibold text-blue-600 mb-4">Our Approach</h3>
+          <p class="text-gray-600 leading-relaxed">
+            We believe in patient-centered care that combines medical expertise with compassion. Our team of dedicated 
+            healthcare professionals works tirelessly to provide comprehensive care while ensuring your comfort and understanding 
+            at every step.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+          <h3 class="text-2xl font-semibold text-blue-600 mb-4">Our Commitment</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Your health journey is our priority. We're dedicated to maintaining the highest standards of medical care while 
+            making healthcare accessible, affordable, and convenient for all our patients.
+          </p>
+        </div>
+      </div>
+      
+      <div class="relative">
+        <div class="absolute inset-0 bg-blue-600 rounded-xl transform translate-x-3 translate-y-3"></div>
+        <img src="img/bggg.jpg" alt="Medical Team" class="relative z-10 rounded-xl shadow-xl w-full h-full object-cover"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
+      <p class="text-xl text-gray-600">Comprehensive Healthcare Solutions Tailored to Your Needs</p>
+      <div class="w-24 h-1 bg-blue-600 mx-auto mt-4"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Primary Care Card -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+        <div class="h-48 bg-blue-600 relative">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i class="fas fa-user-md text-white text-5xl"></i>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Primary Care</h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Comprehensive Health Screenings
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Preventive Care & Vaccinations
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Chronic Disease Management
+            </li>
+          </ul>
+          <button class="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+            Schedule Appointment
+          </button>
+        </div>
+      </div>
+
+      <!-- Specialized Care Card -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+        <div class="h-48 bg-blue-600 relative">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i class="fas fa-heartbeat text-white text-5xl"></i>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Specialized Care</h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Cardiology Services
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Orthopedic Treatment
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Neurological Care
+            </li>
+          </ul>
+          <button class="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+            Book Consultation
+          </button>
+        </div>
+      </div>
+
+      <!-- Emergency Care Card -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+        <div class="h-48 bg-blue-600 relative">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <i class="fas fa-ambulance text-white text-5xl"></i>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Emergency Care</h3>
+          <ul class="space-y-3 text-gray-600">
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              24/7 Emergency Services
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Trauma Care
+            </li>
+            <li class="flex items-center">
+              <i class="fas fa-check text-blue-600 mr-2"></i>
+              Critical Care Units
+            </li>
+          </ul>
+          <button class="mt-6 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+            Emergency Contact
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Enhanced Footer -->
+  <footer class="bg-gray-900 text-gray-100 pt-16 pb-6">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div class="space-y-4">
+          <img src="img/logo.png" alt="Logo" class="h-12 mb-4">
+          <p class="text-gray-400">Providing quality healthcare services for a healthier tomorrow.</p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">Services</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Contact</h4>
+          <ul class="space-y-2">
+            <li class="flex items-center text-gray-400">
+              <i class="fas fa-envelope mr-2"></i>
+              <a href="mailto:ihealth@gmail.com" class="hover:text-white transition-colors">ihealth@gmail.com</a>
+            </li>
+            <li class="flex items-center text-gray-400">
+              <i class="fas fa-phone mr-2"></i>
+              <span>+1 234 567 890</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Follow Us</h4>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fab fa-facebook fa-lg"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fab fa-twitter fa-lg"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fab fa-instagram fa-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-6 text-center text-gray-400">
+        <p>&copy; 2025 iHealth. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Password Toggle -->
+  <script>
+    // Toggle mobile menu with animation
+    function toggleMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("hidden");
+    }
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      header.classList.toggle('shadow-lg', window.scrollY > 0);
+    });
+
+    AOS.init()
+  </script>
+
+<script src="script.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</body>
+</html>

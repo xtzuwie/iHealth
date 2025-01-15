@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            background: linear-gradient(135deg, #4f46e5, #818cf8, #ec4899);
+            animation: gradientBG 10s linear infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .left-section {
+            display: none;
+            width: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 4rem 2rem;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            z-index: 0;
+        }
+
+        .left-section > div {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-circle {
+            width: auto;
+            margin-bottom: 3rem;
+        }
+
+        .logo-text {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: -1px;
+        }
+
+        .left-section h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .left-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Responsive SVG */
+.svg-container { 
+	width: 120%;
+	height: 75%;
+	padding-top: 50%; /* sets the height of the SVG */
+	position: relative; 
+}
+.svg-content { 
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* Stethoscope Icon */
+#stethoscope-icon {
+	fill: transparent;
+	overflow: visible;
+}
+#stethoscope-top {
+	animation: stethoscope-top 5000ms infinite;
+	fill: red;
+	transform-origin: 50% 50%;
+	transform-box: fill-box;
+}
+.stethoscope-details {
+	fill: lightgrey;
+}
+#stethoscope-wire {
+	stroke: white;
+	stroke-width: 7;
+	stroke-dasharray: 290.49px;
+	stroke-dashoffset: 290.49px;
+	animation: line-animation 6000ms ease-in-out forwards infinite;
+}
+#stethoscope-wire-bg {
+	stroke: #4f46e5;
+	stroke-width: 7;
+}
+#stethoscope-end {
+	animation: stethoscope-end 1400ms infinite;
+	fill: red;
+	transform-origin: 50% 50%;
+	transform-box: fill-box;
+}
+
+/* Key Frames */
+@keyframes stethoscope-end {
+    0% { transform: scale(1,1); }
+    5% { transform: scale(1.1,1.1); fill: #47B7DB; }
+}
+@keyframes stethoscope-top {
+	0%, 100% {transform: rotateY(0deg); fill: #FFF;}
+	50% {transform: rotateY(180deg); fill: #47B7DB;}
+}
+@keyframes line-animation {
+	0%, 100% {stroke-dashoffset: 0;}
+	50% {stroke-dashoffset: 290.49;}
+}
+        .right-section {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-card h2 {
+            color: #1f2937;
+            text-align: center;
+            font-size: 1.75rem;
+            margin-bottom: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 1.75rem;
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 3rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .password-toggle {
+            position: absolute;
+            left: 18rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #4338ca;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: #4f46e5;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .links a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 0.5rem;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .links a:hover {
+            color: #4338ca;
+            text-decoration: underline;
+        }
+
+        .links span {
+            color: #d1d5db;
+            margin: 0 0.5rem;
+        }
+
+        .links h1 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6b7280;
+            margin: 1rem 0;
+        }
+
+        .error-message {
+            display: none;
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            padding-left: 0.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .left-section {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .right-section {
+                width: 50%;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .login-card {
+                max-width: 100%;
+            }
+            
+            .right-section {
+                padding: 1.5rem;
+            }
+            .password-toggle {
+                max-width: fit-content;
+            }
+        }
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: medium;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div>
+                <div class="logo-circle">
+                    <span class="logo-text">iHealth</span>
+                </div>
+                <p>Live your life to the fullest.</p>
+                <div class="svg-container">
+                    <svg id="stethoscope-icon" class="svg-content" width="100%" height="100%" viewBox="0 0 174 174" xmlns="http://www.w3.org/2000/svg">
+                <g id="stethoscope-top">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M32.5035 1.67334L0 1.67334V65.2603H0.00101153C0.000337542 65.3532 0 65.4462 0 65.5392C0 87.565 18.918 105.421 42.2546 105.421C65.5911 105.421 84.5091 87.565 84.5091 65.5392C84.5091 65.4462 84.5088 65.3532 84.5081 65.2603H84.5091V1.67334L52.5966 1.67334V7.25115H79.1904V64.3427H79.1895L79.1902 64.4906L79.1904 64.5931C79.1904 84.369 62.6537 100.4 42.2546 100.4C21.8555 100.4 5.31876 84.369 5.31876 64.5931C5.31876 64.5095 5.31905 64.4261 5.31964 64.3427H5.31876V7.25115H32.5035V1.67334Z" />
+                    <path class="stethoscope-details" d="M32.5035 0H37.2313V8.92449H32.5035V0Z" />
+                    <path class="stethoscope-details" d="M47.8688 0H52.5966V8.92449H47.8688V0Z" />
+                </g>
+                <path class="stethoscope-details" d="M37.8223 107.652V103.189H47.2778V107.652H37.8223Z" />
+                <path id="stethoscope-wire-bg" d="M42.7576 107.774V130.089C42.5899 140.059 48.9952 160 75.9576 160C102.92 160 108.319 140.059 107.649 130.089V94.9555C107.146 86.726 111.673 70.2671 133.806 70.2671C155.939 70.2671 160.467 86.726 159.964 94.9555V146.706" />
+                <path id="stethoscope-wire" d="M42.7576 107.774V130.089C42.5899 140.059 48.9952 160 75.9576 160C102.92 160 108.319 140.059 107.649 130.089V94.9555C107.146 86.726 111.673 70.2671 133.806 70.2671C155.939 70.2671 160.467 86.726 159.964 94.9555V146.706" />
+                <g id="stethoscope-end">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M160 174C167.732 174 174 167.732 174 160C174 152.268 167.732 146 160 146C152.268 146 146 152.268 146 160C146 167.732 152.268 174 160 174ZM160 167.778C164.296 167.778 167.778 164.296 167.778 160C167.778 155.704 164.296 152.222 160 152.222C155.704 152.222 152.222 155.704 152.222 160C152.222 164.296 155.704 167.778 160 167.778Z" />
+                </g>
+                </svg>
+                </div>
+            </div>
+        </div>
+        <div class="right-section">
+            <div class="login-card">
+                <h2>Sign in</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Email address" required>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="password-toggle-icon"></i>
+                        </button>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+                    <button type="submit" class="submit-btn">Sign in</button>
+                </form>
+                <div class="links">
+                    <a href="#" onclick="showForgotPassword()">Forgot password?</a>
+                    <h1>New User?</h1>
+                    <a href="register.html">Sign up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Firebase configuration and authentication code remains the same
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAnZu08uSA2EXwkUyd_1hF2Lqxk4uxQ_9s",
+            authDomain: "newhealth-b3603.firebaseapp.com",
+            databaseURL: "https://newhealth-b3603-default-rtdb.firebaseio.com",
+            projectId: "newhealth-b3603",
+            storageBucket: "newhealth-b3603.appspot.com",
+            messagingSenderId: "978834053140",
+            appId: "1:978834053140:web:c6f2fdf2c4f977a7cbaf01"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const allPaths = document.querySelectorAll("#stethoscope-icon path"); 
+
+// For each over each path and log results to console.
+// Just grab the respective path px for your CSS
+allPaths.forEach((path, i) => {
+  console.log(`path ${i} is ${path.getTotalLength().toFixed(2)}px`);
+});
+
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                window.location.href = './dashboard.html';
+            } catch (error) {
+                const errorMessage = error.message.replace('Firebase: ', '');
+                if (error.code === 'auth/invalid-email') {
+                    document.getElementById('email-error').textContent = 'Invalid email address';
+                    document.getElementById('email-error').style.display = 'block';
+                } else {
+                    document.getElementById('password-error').textContent = errorMessage;
+                    document.getElementById('password-error').style.display = 'block';
+                }
+            }
+        });
+
+        window.togglePassword = function() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('password-toggle-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        window.showForgotPassword = async function() {
+            const email = prompt("Enter your email to reset your password:");
+            if (email) {
+                try {
+                    await sendPasswordResetEmail(auth, email);
+                    alert("Password reset email sent!");
+                } catch (error) {
+                    alert("Error: " + error.message);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
