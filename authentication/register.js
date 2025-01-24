@@ -7,13 +7,7 @@ import {
 
 // Firebase configuration (make sure not to expose these in production)
 const firebaseConfig = {
-  apiKey: "AIzaSyAnZu08uSA2EXwkUyd_1hF2Lqxk4uxQ_9s",
-  authDomain: "newhealth-b3603.firebaseapp.com",
-  databaseURL: "https://newhealth-b3603-default-rtdb.firebaseio.com",
-  projectId: "newhealth-b3603",
-  storageBucket: "newhealth-b3603.firebasestorage.app",
-  messagingSenderId: "978834053140",
-  appId: "1:978834053140:web:c6f2fdf2c4f977a7cbaf01",
+  "REPLACE with your Firebase Configuration (API for Firebase)
 };
 
 // Initialize Firebase
